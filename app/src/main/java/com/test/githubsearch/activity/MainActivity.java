@@ -48,10 +48,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         mPresenter = new MainPresenter(this, mOwnerName);
 
-        mProgressBar = (ProgressBar)findViewById(R.id.progressBar);
+        mProgressBar = findViewById(R.id.progressBar);
 
         // Set the mAdapter
-        mResultView = (RecyclerView) findViewById(R.id.recyclerView);
+        mResultView = findViewById(R.id.recyclerView);
         mResultView.setHasFixedSize(true);
         mResultView.setItemAnimator(new DefaultItemAnimator());
 
@@ -84,10 +84,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mAdapter = new ResultRecyclerViewAdapter(mFollowers, new ResultRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(User user) {
-                String name = user.login;
-                Intent intent = new Intent(MainActivity.this, FollowerActivity.class);
-                intent.putExtra(Constant.IntentExtra.FOLLOWER_NAME, name);
-                startActivity(intent);
+                mPresenter.onItemClick(user);
             }
         });
         mResultView.setAdapter(mAdapter);
