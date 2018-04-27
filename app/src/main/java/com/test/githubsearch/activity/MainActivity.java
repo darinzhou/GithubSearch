@@ -97,6 +97,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDestroy();
+    }
+
+    @Override
     public void showProgress() {
         mProgressBar.post(new Runnable() {
             @Override

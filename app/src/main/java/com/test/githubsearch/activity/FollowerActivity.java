@@ -92,6 +92,12 @@ public class FollowerActivity extends AppCompatActivity implements FollowerContr
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDestroy();
+    }
+
+    @Override
     public void showProgress() {
         mProgressBar.post(new Runnable() {
             @Override

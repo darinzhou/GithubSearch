@@ -1,5 +1,8 @@
 package com.test.githubsearch.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -8,12 +11,16 @@ import org.json.JSONObject;
  */
 
 public class User {
+    @SerializedName("avatar_url")
+    @Expose
     public String avatarUrl;
+
+    public int public_repos;
+
     public String login;
     public String name;
     public String location;
     public String email;
-    public int public_repos;
     public int followers;
     public int following;
 

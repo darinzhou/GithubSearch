@@ -1,15 +1,20 @@
 package com.test.githubsearch;
 
+import com.test.githubsearch.api.GitHubClient;
 import com.test.githubsearch.model.User;
-import com.test.githubsearch.util.Constant;
-import com.test.githubsearch.util.GithubApi;
 
 import java.util.List;
+import rx.Observer;
 
-public class MainPresenter implements MainContract.Presenter, GithubApi.ApiCallback {
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+public class MainPresenter implements MainContract.Presenter {
 
     MainContract.View view;
     String ownerName;
+    Subscription subscription;
 
     public MainPresenter(MainContract.View view, String ownerName) {
         this.view = view;
@@ -18,14 +23,40 @@ public class MainPresenter implements MainContract.Presenter, GithubApi.ApiCallb
 
     @Override
     public void onResume() {
+        getFollowers(ownerName);
+    }
+
+    private void getFollowers(String userName) {
         view.showProgress();
-        String api = String.format(Constant.GithubApi.API_GET_FOLLOWERS, ownerName);
-        GithubApi.excute(api, this);
+        Observer<List<User>> followersObserver = new Observer<List<User>>() {
+            @Override
+            public void onCompleted() {
+                view.hideProgress();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                view.hideProgress();
+                view.showError(e.getMessage());
+            }
+
+            @Override
+            public void onNext(List<User> users) {
+                view.updateContent(users);
+            }
+        };
+
+        subscription = GitHubClient.getInstance().getFollowers(userName)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(followersObserver);
     }
 
     @Override
     public void onDestroy() {
-
+        if (subscription != null) {
+            subscription.unsubscribe();
+        }
     }
 
     @Override
@@ -33,15 +64,4 @@ public class MainPresenter implements MainContract.Presenter, GithubApi.ApiCallb
         view.displayFollowerDetails(user);
     }
 
-    @Override
-    public void onSucceed(List<User> users) {
-        view.updateContent(users);
-        view.hideProgress();
-    }
-
-    @Override
-    public void onFailed(String error) {
-        view.hideProgress();
-        view.showError(error);
-    }
 }
