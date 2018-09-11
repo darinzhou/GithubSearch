@@ -111,6 +111,7 @@ public class FollowerActivity extends AppCompatActivity implements FollowerContr
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.stop();
+        ((GithubApp) getApplication()).releaseActivityComponent();
     }
 
     //--------------------------------------------------------------------------------------------
