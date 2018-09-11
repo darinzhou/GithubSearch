@@ -6,9 +6,7 @@ public class Constant {
         String FOLLOWER_NAME = "com.test.githubsearch.util.FOLLOWER_NAME";
     }
 
-    public interface GithubApi {
+    public interface GitHubApi {
         String BASE_URL = "https://api.github.com/";
-        String API_GET_FOLLOWERS = BASE_URL + "users/%s/followers";
-        String API_GET_USER = BASE_URL + "users/%s";
     }
 }

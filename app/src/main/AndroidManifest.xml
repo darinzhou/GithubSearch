@@ -8,12 +8,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".GithubApp"
+        android:name=".app.GithubApp"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.InputNameActivity"
+            android:name=".ui.inputname.InputNameActivity"
             android:label="@string/title_activity_input_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,10 +22,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".ui.main.MainActivity">
         </activity>
 
-        <activity android:name=".activity.FollowerActivity"
+        <activity android:name=".ui.follower.FollowerActivity"
             android:theme="@style/AppTheme.ActionBar.Transparent">
         </activity>
     </application>

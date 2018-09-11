@@ -1,12 +1,12 @@
-package com.test.githubsearch.api;
+package com.test.githubsearch.data.api;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import rx.Observable;
 
-import com.test.githubsearch.model.User;
+import com.test.githubsearch.data.api.model.User;
 
 public interface GitHubApi {
     String BASE_URL = "https://api.github.com/";
